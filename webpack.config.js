@@ -15,7 +15,7 @@ module.exports = {
       new UglifyJsPlugin({
         uglifyOptions: {
           output: {comments: /^\**!|@preserve|@license|@cc_on/},
-		  safari10: true
+          safari10: true
         }
       })
     ]
@@ -23,12 +23,18 @@ module.exports = {
   module: {
     rules: [
       {
+        enforce: "pre",
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: "eslint-loader",
+      },
+      {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader'
         }
-      }
+      },
     ]
   }
 };
