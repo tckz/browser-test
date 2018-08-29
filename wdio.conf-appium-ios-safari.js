@@ -44,12 +44,16 @@ exports.config = {
     // maxInstances can get overwritten per capability. So if you have an in-house Selenium
     // grid with only 5 firefox instances available you can make sure that not more than
     // 5 instances get started at a time.
-    maxInstances: 5,
+    maxInstances: 1,
     //
+    automationName: 'XCUITest',
     browserName: 'safari',
-    ichromeOptions: {
-      args: ['--headless', '--disable-gpu']
-    },
+    deviceName: 'iPhone X',
+    platformName: 'iOS',
+    // なくても動く。レポートファイル名に入る。
+    //platformVersion: "11.2",
+    udid: '<udid>',
+    startIWDP: true,
   }],
   //
   // ===================
@@ -116,7 +120,23 @@ exports.config = {
   // Services take over a specific job you don't want to take care of. They enhance
   // your test setup with almost no effort. Unlike plugins, they don't add new
   // commands. Instead, they hook themselves up into the test process.
-  services: ['selenium-standalone'],
+  services: ['selenium-standalone', 'appium'],
+  appium: {
+    args: {
+      address: '127.0.0.1',
+      commandTimeout: '7200',
+      sessionOverride: true,
+      debugLogSpacing: true,
+      showIosLog: true,
+      nativeInstrumentsLib: true,
+      // true: always create new simulator instance
+      // false: reuse existing instance
+      isolateSimDevice: false,
+    }
+  },
+  // この階層じゃないと動かないのはなぜ？？
+  port: 4723,
+
   //
   // Framework you want to run your specs with.
   // The following are supported: Mocha, Jasmine, and Cucumber
@@ -256,17 +276,17 @@ exports.config = {
     if (!test.passed) {
       const path = browser.options.screenshotPath;
       const featureName = test.file
-        .replace(process.cwd(), '')
-        .split('/')
-        .join('_')
-        .replace('.feature', '');
+        .replace(process.cwd(), "")
+        .split("/")
+        .join("_")
+        .replace(".feature", "");
 
       const fileName =
         path +
-        '/ERROR_' +
+        "/ERROR_" +
         browser.options.desiredCapabilities.browserName +
         featureName +
-        '.png';
+        ".png";
       browser.saveScreenshot(fileName);
     }
   }

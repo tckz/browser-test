@@ -4,6 +4,7 @@
 /screenShots
 *.swp
 .DS_Store
+/appium.log
 
 # https://github.com/github/gitignore/blob/master/Global/JetBrains.gitignore
 

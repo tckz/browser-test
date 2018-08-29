@@ -5,7 +5,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 module.exports = {
   mode: 'development',
   devtool: 'source-map',
-  entry: ['babel-polyfill', './index.js'], // babel-polyfill はIE11などで必要
+  entry: ['@babel/polyfill', './index.js'], // babel-polyfill はIE11などで必要
   output: {
     path: `${__dirname}/dist`,
     filename: 'main.js'
